@@ -1,0 +1,21 @@
+name: Add GTFS Archive to Release
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  add_test_to_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download current GTFS Archive
+        run: wget $(curl 'https://registry.npmjs.org/sample-gtfs-feed/latest' -H 'Accept: application/json' -fsSL | jq -rc .dist.tarball)
+
+      - name: Upload GTFS Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: gtfs-sample-feed
+          path: sample-gtfs-feed-*.tgz
