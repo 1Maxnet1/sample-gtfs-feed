@@ -12,10 +12,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download current GTFS Archive
-        run: wget $(curl 'https://registry.npmjs.org/sample-gtfs-feed/latest' -H 'Accept: application/json' -fsSL | jq -rc .dist.tarball)
+        run: |
+          wget $(curl 'https://registry.npmjs.org/sample-gtfs-feed/latest' -H 'Accept: application/json' -fsSL | jq -rc .dist.tarball)
+          mv sample-gtfs-feed-*.tgz gtfs-sample-feed.tgz
 
       - name: Upload GTFS Archive
         uses: actions/upload-artifact@v2
         with:
           name: gtfs-sample-feed
-          path: sample-gtfs-feed-*.tgz
+          path: gtfs-sample-feed.tgz
+
