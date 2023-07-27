@@ -22,3 +22,12 @@ jobs:
           name: gtfs-sample-feed
           path: gtfs-sample-feed.tgz
 
+      - name: Attach GTFS Archive to Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: gtfs-sample-feed.tgz
+          args: |
+            --name "${{ github.event.release.tag_name }}"
+            --body "GTFS Archive for release ${{ github.event.release.tag_name }}"
+            --target "${{ github.event.release.target_commitish }}"
