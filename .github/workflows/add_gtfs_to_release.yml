@@ -17,7 +17,7 @@ jobs:
           mv sample-gtfs-feed-*.tgz gtfs-sample-feed.tgz
 
       - name: Upload GTFS Archive
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: gtfs-sample-feed
           path: gtfs-sample-feed.tgz
