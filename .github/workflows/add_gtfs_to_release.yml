@@ -16,18 +16,8 @@ jobs:
           wget $(curl 'https://registry.npmjs.org/sample-gtfs-feed/latest' -H 'Accept: application/json' -fsSL | jq -rc .dist.tarball)
           mv sample-gtfs-feed-*.tgz gtfs-sample-feed.tgz
 
-      - name: Upload GTFS Archive
-        uses: actions/upload-artifact@v3
-        with:
-          name: gtfs-sample-feed
-          path: gtfs-sample-feed.tgz
-
-      - name: Attach GTFS Archive to Release
-        id: create_release
+      - name: Release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: gtfs-sample-feed.tgz
-          args: |
-            --name "${{ github.event.release.tag_name }}"
-            --body "GTFS Archive for release ${{ github.event.release.tag_name }}"
-            --target "${{ github.event.release.target_commitish }}"
