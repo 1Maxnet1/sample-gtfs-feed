@@ -1,0 +1,13 @@
+name: Upload GTFS Archive to Tagged Commits
+on:
+  push:
+    # Pattern matched against refs/tags
+    tags:        
+      - '**'           # Push events to every tag including hierarchical tags like v1.0/beta
+
+jobs:
+  upload_gtfs_on_tag:
+    runs-on: node
+    steps:
+      - name: Generate GTFS files
+        run: npm run build
